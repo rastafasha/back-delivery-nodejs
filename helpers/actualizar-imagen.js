@@ -12,8 +12,12 @@ const Driver = require('../models/driver');
 const borrarImagen = (path) => {
 
     if (fs.existsSync(path)) {
-        //borrar la imagen anterior
-        fs.unlinkSync(path);
+        // Verificar que sea un archivo y no un directorio
+        const stats = fs.lstatSync(path);
+        if (stats.isFile()) {
+            //borrar la imagen anterior
+            fs.unlinkSync(path);
+        }
     }
 }
 

@@ -8,11 +8,10 @@ const getUsuarios = async(req, res) => {
 
     const desde = Number(req.query.desde) || 0;
 
-    const [usuarios, total] = await Promise.all([
+const [usuarios, total] = await Promise.all([
         Usuario
-        .find({}, 'first_name email role google img local') //esto ultimo filtra el resultado
+        .find({}, 'first_name email role google img ') //esto ultimo filtra el resultado
         .skip(desde)
-        .populate('first_name email role google img local')
         .sort({ createdAt: -1 }),
         // .limit(5),
         Usuario.countDocuments()
@@ -33,7 +32,6 @@ const getAllUsers = async(req, res) => {
     const usuarios = await Usuario.find()
     .skip(desde)
     // .limit(5)
-    .populate('first_name email role google img local');
     Usuario.countDocuments()
 
     res.json({
@@ -70,7 +68,6 @@ const getTDrivers = async(req, res) => {
     .equals('CHOFER' )
     // .skip(desde)
     // .limit(5)
-    .populate('first_name email role google img local')
     
     .sort({ createdAt: -1 });
     // Usuario.countDocuments()
@@ -88,7 +85,6 @@ const getTDriversLocal = async(req, res) => {
     const uid = req.uid;
 
     const drivers = await Usuario.find({ local: local, role: 'CHOFER' })
-    .populate('first_name email role google img local')
     .sort({ createdAt: -1 });
 
     res.json({
