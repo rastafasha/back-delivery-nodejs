@@ -72,7 +72,7 @@ const fileUpload = async (req, res = response) => {
         // subir a Cloudinary
         try {
             const result = await cloudinary.uploader.upload(savePath, {
-                folder: `mallConnect/uploads/${tipo}/`
+                folder: `enviosapp/uploads/${tipo}/`
             });
             // console.log(result);
             const nombreArchivo = result.secure_url;

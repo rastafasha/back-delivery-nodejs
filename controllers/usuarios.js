@@ -2,7 +2,6 @@ const { response } = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
-const Tienda = require('../models/tienda');
 
 
 const getUsuarios = async(req, res) => {
@@ -118,60 +117,6 @@ const getTClients = async(req, res) => {
     });
 };
 
-const getTiendaUsers = async(req, res) => {
-    var local = req.params['local'];
-
-    // Use find() to get all users associated with the local ID
-    Usuario.find({ local: local }).exec((err, tiendauserslocal) => {
-        if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
-        } else {
-            if (tiendauserslocal && tiendauserslocal.length > 0) {
-                res.status(200).send({ local: tiendauserslocal });
-            } else {
-                res.status(404).send({ message: 'No se encontró ningun dato en esta sección.' });
-            }
-        }
-    });
-};
-
-const getTiendaLocalEmployees = async(req, res) => {
-    var local = req.params['local'];
-
-    // Usar find() para obtener todos los usuarios asociados con el ID del local y los roles especificados
-    Usuario.find({ 
-        local: local, 
-        // role: { $in: ['TIENDA', 'ALMACEN', 'VENTAS'] } 
-    }).exec((err, tiendauserslocal) => {
-        if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
-        } else {
-            if (tiendauserslocal && tiendauserslocal.length > 0) {
-                res.status(200).send({ local: tiendauserslocal });
-            } else {
-                res.status(404).send({ message: 'No se encontró ningun dato en esta sección.' });
-            }
-        }
-    });
-};
-
-const getAlmacenUsers = async(req, res) => {
-
-    const desde = Number(req.query.desde) || 0;
-
-    const almacenusers = await Usuario.find()
-    .where('role')
-    .equals('ALMACEN' )
-    .skip(desde)
-    .limit(5)
-    .sort({ createdAt: -1 });
-    Usuario.countDocuments()
-
-    res.json({
-        ok: true,
-        almacenusers
-    });
-};
 
 const getUsuario = async(req, res) => {
 
@@ -638,8 +583,6 @@ module.exports = {
     set_token_recovery,
     verify_token_recovery,
     change_password,
-    getTiendaUsers,
-    getAlmacenUsers,
     getTEmployees,
     getTDrivers,
     getTDriversLocal,
@@ -647,5 +590,4 @@ module.exports = {
     actualizarStatusUsuario,
     getUsuariobyCedula,
     crearCliente,
-    getTiendaLocalEmployees
 };

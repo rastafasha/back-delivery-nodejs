@@ -12,7 +12,7 @@
     getDriver,
     borrarDriver,
     listarDriverPorUsuario,
-    listarDriverPorLocal
+    // listarDriverPorLocal
  } = require('../controllers/driverpController');
  const { validarJWT } = require('../middlewares/validar-jwt');
  const { validarCampos } = require('../middlewares/validar-campos');
@@ -21,7 +21,7 @@
  router.get('/', getDrivers);
  router.get('/:id', getDriver);
  router.get('/user/:userId', listarDriverPorUsuario);
- router.get('/tienda/:local', listarDriverPorLocal);
+//  router.get('/tienda/:local', listarDriverPorLocal);
  
  router.post('/store', [
      validarJWT,

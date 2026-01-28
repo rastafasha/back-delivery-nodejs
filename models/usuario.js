@@ -10,7 +10,6 @@ const UsuarioSchema = Schema({
     ciudad: { type: String, require: false },
     role: { type: String, require: true, default: 'USER' },
     driver: { type: Schema.ObjectId, require: false, ref: 'driver' },
-    local: { type: Schema.ObjectId, ref: 'tienda'},
     lang: { type: String, },
     telefono: { type: String, },
     numdoc: { type: String },

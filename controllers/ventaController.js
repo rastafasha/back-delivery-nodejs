@@ -1,11 +1,9 @@
 const { response } = require('express');
 const Venta = require('../models/venta');
-const Tienda = require('../models/tienda');
 var Detalle = require('../models/detalle');
 var Cancelacion = require('../models/cancelacion');
 
 const { io } = require('../index');
-const ProductoController = require('./productoController');
 
 // importamos nodemailer, agregado por José Prados
 const nodemailer = require('nodemailer');
@@ -102,7 +100,7 @@ function registro(req, res) {
                     detalleveta.user = data.user;
                     detalleveta.local = data.local;
                     detalleveta.venta = venta_save._id;
-                    detalleveta.producto = element.producto;
+                    // detalleveta.producto = element.producto;
                     detalleveta.cantidad = element.cantidad;
                     detalleveta.precio = element.precio;
                     detalleveta.color = element.color;

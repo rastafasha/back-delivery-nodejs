@@ -1,6 +1,6 @@
 const { response } = require('express');
 const Tienda = require('../models/tienda');
-const Venta = require('../models/venta');
+// const Venta = require('../models/venta');
 const Driver = require('../models/driver');
 const Asignacion = require('../models/asignardelivery');
 
@@ -159,25 +159,7 @@ const getAsignacions = async(req, res) => {
         asignacions
     });
 };
-const getAsignacionsTienda = async(req, res) => {
 
-    const asignacions = await Asignacion.find().populate('tienda')
-    .populate('driver');
-
-      
-    const tiendaid = req.params.tiendaid;
-    const tienda = await Tienda.findById(tiendaid);
-
-    const asignacionsTienda = asignacions.filter(asignacion => asignacion.tienda.toString() === tiendaid)
-    ;  
-
-
-    res.json({
-        ok: true,
-        // asignacionsTienda,
-        asignacions,
-    });
-};
 
 const getAsignacion = async(req, res) => {
 
@@ -186,7 +168,6 @@ const getAsignacion = async(req, res) => {
     Asignacion.findById(id)
         .populate('driver')
         .populate('venta')
-        .populate('tienda')
         .exec((err, asignacion) => {
             if (err) {
                 return res.status(500).json({

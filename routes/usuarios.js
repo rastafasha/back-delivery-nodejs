@@ -16,8 +16,6 @@ const {
     set_token_recovery,
     verify_token_recovery,
     change_password,
-    getTiendaUsers,
-    getAlmacenUsers,
     getTEmployees,
     getTDrivers,
     getTDriversLocal,
@@ -25,7 +23,6 @@ const {
     actualizarStatusUsuario,
     getUsuariobyCedula,
     crearCliente,
-    getTiendaLocalEmployees
     
 } = require('../controllers/usuarios');
 const {
@@ -42,13 +39,7 @@ router.get('/',
 router.get('/all/', 
     // validarJWT, 
     getAllUsers);
-router.get('/users_store/:local/', 
-    validarJWT, 
-    getTiendaUsers);
-router.get('/employe_store/:local/', 
-    validarJWT, 
-    getTiendaLocalEmployees);
-router.get('/users_almacen/', validarJWT, getAlmacenUsers);
+    
 router.get('/employees/', validarJWT, getTEmployees);
 router.get('/drivers/',
     //  validarJWT, 

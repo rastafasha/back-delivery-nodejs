@@ -1,17 +1,12 @@
 const fs = require('fs');
 const Usuario = require('../models/usuario');
-const Marca = require('../models/marca');
 const Congeneral = require('../models/congeneral');
-const Producto = require('../models/producto');
 const Promocion = require('../models/promocion');
-const Galeria = require('../models/galeria');
 const Ingreso = require('../models/ingreso');
 const Blog = require('../models/blog');
 const Page = require('../models/page');
 const Slider = require('../models/slider');
-const Curso = require('../models/curso');
 const Categoria = require('../models/categoria');
-const Tienda = require('../models/tienda');
 const Driver = require('../models/driver');
 
 const borrarImagen = (path) => {
@@ -45,21 +40,6 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
             break;
 
 
-        case 'productos':
-            const producto = await Producto.findById(id);
-            if (!producto) {
-                console.log('No es un producto por id');
-                return false;
-            }
-            pathViejo = `./uploads/productos/${producto.img}`;
-
-            borrarImagen(pathViejo);
-
-            producto.img = nombreArchivo;
-            await producto.save();
-            return true;
-            break;
-
         case 'locaciones':
                 const tienda = await Tienda.findById(id);
                 if (!tienda) {
@@ -75,69 +55,8 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
                 return true;
                 break;
 
-        case 'galerias':
-            const galeria = await Galeria.findById(id);
-            if (!galeria) {
-                console.log('No es un galeria por id');
-                return false;
-            }
-            pathViejo = `./uploads/galerias/${galeria.img}`;
-
-            borrarImagen(pathViejo);
-
-            galeria.img = nombreArchivo;
-            await galeria.save();
-            return true;
-            break;
-
-        case 'cursos':
-            const curso = await Curso.findById(id);
-            if (!curso) {
-                console.log('No es un curso por id');
-                return false;
-            }
-            pathViejo = `./uploads/cursos/${curso.img}`;
-
-            borrarImagen(pathViejo);
-
-            curso.img = nombreArchivo;
-            await curso.save();
-            return true;
-            break;
-
-        case 'marcas':
-            const marca = await Marca.findById(id);
-            if (!marca) {
-                console.log('No es un marcas por id');
-                return false;
-            }
-            pathViejo = `./uploads/marcas/${marca.img}`;
-
-            borrarImagen(pathViejo);
-
-            marca.img = nombreArchivo;
-            await marca.save();
-            return true;
-            break;
-
-        
         case 'usuarios':
-            const usuario = await Usuario.findById(id);
-            if (!usuario) {
-                console.log('No es un usuario por id');
-                return false;
-            }
-            pathViejo = `./uploads/usuarios/${usuario.img}`;
-
-            borrarImagen(pathViejo);
-
-            usuario.img = nombreArchivo;
-            await usuario.save();
-            return true;
-            break;
-
-
-
+            
         case 'ingresos':
             const ingreso = await Ingreso.findById(id);
             if (!ingreso) {

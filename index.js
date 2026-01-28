@@ -57,27 +57,23 @@ app.use('/api/sliders', require('./routes/slider'));
 
 //tienda
 app.use('/api/categorias', require('./routes/categoria'));
-app.use('/api/productos', require('./routes/producto'));
 app.use('/api/carritos', require('./routes/carrito'));
 app.use('/api/comentarios', require('./routes/comentario'));
 app.use('/api/congenerals', require('./routes/congeneral'));
 app.use('/api/contactos', require('./routes/contacto'));
 app.use('/api/cupons', require('./routes/cupon'));
 app.use('/api/direccions', require('./routes/direccion'));
-app.use('/api/ingresos', require('./routes/ingreso'));
 app.use('/api/postals', require('./routes/postal'));
 app.use('/api/tickets', require('./routes/ticket'));
-app.use('/api/ventas', require('./routes/venta'));
+// app.use('/api/ventas', require('./routes/venta'));
 app.use('/api/promocions', require('./routes/promocion'));
-app.use('/api/shippings', require('./routes/shipping'));
-app.use('/api/pickups', require('./routes/pickup'));
-app.use('/api/notifications', require('./routes/notifications'));
+// app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/favoritos', require('./routes/favorito'));
 app.use('/api/tipopago', require('./routes/tipopago'));
 app.use('/api/transferencias', require('./routes/transferencia'));
 app.use('/api/pagoefectivo', require('./routes/pago.efectivo'));
 app.use('/api/paises', require('./routes/pais'));
-app.use('/api/asignardelivery', require('./routes/asignardelivery'));
+// app.use('/api/asignardelivery', require('./routes/asignardelivery'));
 app.use('/api/driver', require('./routes/driver'));
 
 //notification

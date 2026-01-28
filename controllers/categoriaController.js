@@ -1,6 +1,5 @@
 const { response } = require('express');
 const Categoria = require('../models/categoria');
-const Producto = require('../models/producto');
 
 const getCategorias = async(req, res) => {
 
@@ -39,7 +38,6 @@ const getCategoria = async(req, res) => {
             res.status(200).json({
                 ok: true,
                 categoria: categoria,
-                productos: Producto,
             });
         });
 
@@ -237,73 +235,7 @@ function list_one(req, res) {
 }
 
 
-function find_by_name(req, res) {
-    var nombre = req.params['nombre'];
 
-    Categoria.findOne({ nombre: nombre }, (err, categoria_data) => {
-        if (err) {
-            return res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
-        }
-        if (!categoria_data) {
-            return res.status(404).send({ message: 'Categoría no encontrada.' });
-        }
-
-        Producto.find({ categoria: categoria_data._id, status: ['Activo'] })
-            .populate('categoria')
-            .exec((err, productos) => {
-                if (err) {
-                    return res.status(500).send({ message: 'Error al buscar productos.' });
-                }
-                res.json({
-                    ok: true,
-                    categoria: categoria_data,
-                    productos: productos
-                });
-            });
-    });
-}
-function find_by_subcategory(req, res) {
-    const id = req.params.id;
-
-    Categoria.findById(id)
-        .exec((err, categoria) => {
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    mensaje: 'Error al buscar categoria',
-                    errors: err
-                });
-            }
-            if (!categoria) {
-                return res.status(400).json({
-                    ok: false,
-                    mensaje: 'El categoria con el id ' + id + 'no existe',
-                    errors: { message: 'No existe un categoria con ese ID' }
-                });
-
-            }
-            Producto.find({ 
-                $or: [
-                    { categoria: categoria._id },
-                    { subcategoria: id }
-                ],
-                status: ['Activo'] 
-            })
-            .populate('categoria')
-            .exec((err, productos) => {
-                if (err) {
-                    return res.status(500).send({ message: 'Error al buscar productos.' });
-                }
-                res.json({
-                    ok: true,
-                    categoria: categoria,
-                    productos: productos
-                });
-            });
-    });
-
-    
-}
 
 
 const getCategoriasActivos = async(req, res) => {
@@ -364,8 +296,6 @@ module.exports = {
     getCategoria,
     get_car_slide,
     list_one,
-    find_by_name,
-    find_by_subcategory,
     getCategoriasActivos,
     desactivar,
     activar

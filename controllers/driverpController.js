@@ -1,7 +1,7 @@
 const { response } = require('express');
 const Driver = require('../models/driver');
 const Usuario = require('../models/usuario');
-const Tienda = require('../models/tienda');
+// const Tienda = require('../models/tienda');
 
 const crearDriver = async(req, res) => {
 
@@ -227,6 +227,6 @@ module.exports = {
     getDriver,
     borrarDriver,
     listarDriverPorUsuario,
-    listarDriverPorLocal
+    // listarDriverPorLocal
 
 };

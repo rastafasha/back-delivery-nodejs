@@ -1,14 +1,9 @@
 const { response } = require('express');
-const Marca = require('../models/marca');
 const Usuario = require('../models/usuario');
 const Blog = require('../models/blog');
 const Page = require('../models/page');
 const Slider = require('../models/slider');
-const Producto = require('../models/producto');
-const Curso = require('../models/curso');
-const Tienda = require('../models/tienda');
 const Transferencia = require('../models/transferencia');
-const PagoCheque = require('../models/pagocheque');
 const PagoEfectivo = require('../models/pago.efectivo');
 const Categoria = require('../models/categoria');
 const Promocion = require('../models/promocion');
@@ -28,15 +23,10 @@ const getTodo = async(req, res = response) => {
         promocions,
         ] = await Promise.all([
         Usuario.find({ first_name: regex }),
-        Marca.find({ nombre: regex }),
         Blog.find({ titulo: regex }),
         Page.find({ titulo: regex }),
-        Producto.find({ $or: [{titulo: regex}, {sku: regex}] }),
         Slider.find({ first_title: regex }),
-        Curso.find({ nombre: regex }),
-        Tienda.find({ nombre: regex }),
         Transferencia.find({ $or: [{referencia: regex}, {fecha: regex}, {amount: regex}, {bankName: regex}]}),
-        PagoCheque.find({ $or: [{ncheck: regex}, {name_person: regex}, {amount: regex}] }),
         PagoEfectivo.find({ $or: [{name_person: regex}, {amount: regex}] }),
         Categoria.find({ nombre: regex }),
         Promocion.find({ producto_title: regex }),
@@ -45,15 +35,10 @@ const getTodo = async(req, res = response) => {
     res.json({
         ok: true,
         usuarios,
-        marcas,
         blogs,
         pages,
-        productos,
         sliders,
-        cursos,
-        tiendas,
         transferencias,
-        pagoecheques,
         pagoefectivos,
         categorias,
         promocions,
@@ -70,9 +55,6 @@ const getDocumentosColeccion = async(req, res = response) => {
     let data = [];
 
     switch (tabla) {
-        case 'marcas':
-            data = await Marca.find({ nombre: regex })
-            break;
 
 
         case 'usuarios':
@@ -107,9 +89,6 @@ const getDocumentosColeccion = async(req, res = response) => {
             data = await Transferencia.find({ $or: [{referencia: regex}, {fecha: regex}, {amount: regex}, {bankName: regex}]});
             break;
 
-        case 'pagoecheques':
-            data = await PagoCheque.find({ $or: [{ncheck: regex}, {name_person: regex}, {amount: regex}]});
-            break;
 
         case 'pagoefectivos':
             data = await PagoEfectivo.find({ $or: [{name_person: regex}, {amount: regex}] });
