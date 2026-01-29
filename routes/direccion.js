@@ -11,7 +11,8 @@ const {
     borrarDireccion,
     getDireccion,
     getDireccions,
-    listarPorUsuario
+    listarPorUsuario,
+    getDireccionNombre
 } = require('../controllers/direccionController');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { check } = require('express-validator');
@@ -21,6 +22,9 @@ const { validarCampos } = require('../middlewares/validar-campos');
 router.get('/', getDireccions);
 router.get('/direccionesusuario/:id', listarPorUsuario);
 router.get('/direccion/:id', getDireccion);
+router.get('/nombre/:id/:nombres_completos', getDireccionNombre);
+
+
 
 router.post('/direccion/registro', [
     validarJWT,

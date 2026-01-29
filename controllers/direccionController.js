@@ -1,5 +1,6 @@
 const { response } = require('express');
 const Direccion = require('../models/direccion');
+const Usuario = require('../models/usuario');
 
 const getDireccions = async(req, res) => {
 
@@ -137,6 +138,39 @@ const listarPorUsuario = (req, res) => {
         }
     }).sort({ createdAt: -1 });
 }
+const getDireccionNombre = async(req, res) => {
+    const userId = req.params.id;
+    const nombres_completos = req.params.nombres_completos;
+
+    try {
+        // Verify user exists
+        const usuario = await Usuario.findById(userId);
+        
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado'
+            });
+        }
+
+        // Find address matching both user ID AND nombres_completos
+        const data_direccion = await Direccion.find({ 
+            user: userId,
+            nombres_completos: nombres_completos
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json({
+            ok: true,
+            direccion: data_direccion
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            ok: false,
+            error: err
+        });
+    }
+}
 
 
 
@@ -146,5 +180,6 @@ module.exports = {
     actualizarDireccion,
     borrarDireccion,
     getDireccion,
-    listarPorUsuario
+    listarPorUsuario,
+    getDireccionNombre
 };

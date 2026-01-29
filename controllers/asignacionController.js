@@ -19,12 +19,6 @@ const crearAsignacion = async(req, res) => {
                  msg: 'El Conductor no existe'
             })
         }
-        if (!existeTienda) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'La tienda no existe'
-            });
-        }
         if (!existeDelivery) {
             return res.status(400).json({
                 ok: false,
