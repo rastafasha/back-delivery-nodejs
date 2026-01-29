@@ -27,13 +27,13 @@ router.get('/activo', getTiposActivos);
 router.get('/desactivar/:id', validarJWT, desactivar);
 router.get('/activar/:id', validarJWT, activar);
 
-router.post('/', [
+router.post('/registro', [
     validarJWT,
     check('nombre', 'El nombre del categoria es necesario').not().isEmpty(),
     validarCampos
 ], crearTipo);
 
-router.put('/:id', [
+router.put('/update/:id', [
     validarJWT,
     check('nombre', 'El nombre del categoria es necesario').not().isEmpty(),
     validarCampos

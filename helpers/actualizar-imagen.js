@@ -8,6 +8,7 @@ const Slider = require('../models/slider');
 const Categoria = require('../models/categoria');
 const Driver = require('../models/driver');
 const Delivery = require('../models/delivery');
+const TiposVehiculo = require('../models/tipovehiculo');
 
 const borrarImagen = (path) => {
 
@@ -160,6 +161,21 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
 
             delivery.img = nombreArchivo;
             await delivery.save();
+            return true;
+            break;
+
+         case 'tipos':
+            const tipo = await TiposVehiculo.findById(id);
+            if (!tipo) {
+                console.log('No es un delivery por id');
+                return false;
+            }
+            pathViejo = `./uploads/tipos/${tipo.img}`;
+
+            borrarImagen(pathViejo);
+
+            tipo.img = nombreArchivo;
+            await tipo.save();
             return true;
             break;
         

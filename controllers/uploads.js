@@ -19,10 +19,9 @@ const fileUpload = async (req, res = response) => {
     const tipo = req.params.tipo;
     const id = req.params.id;
 
-    const tiposValidos = [
-        'productos', 'marcas', 'locaciones', 'galerias', 'promocions',
-        'congenerals', 'usuarios', 'ingresos', 'blogs', 'pages', 'cursos', 
-        'sliders', 'categorias', 'drivers'
+    const tiposValidos = [ 
+        'promocions','congenerals', 'usuarios', 
+        'sliders', 'categorias', 'drivers','tipos'
     ];
     if (!tiposValidos.includes(tipo)) {
         return res.status(400).json({
