@@ -5,7 +5,6 @@ const getTipos = async(req, res) => {
 
     const tipos = await TipoVehiculo.find()
     .sort({ createdAt: -1 })
-    .populate('nombre ');
 
     res.json({
         ok: true,
@@ -167,7 +166,7 @@ const getTiposActivos = async(req, res) => {
 function desactivar(req, res) {
     var id = req.params['id'];
 
-    TipoVehiculo.findByIdAndUpdate({ _id: id }, { status: 'Desactivado' }, (err, tipo_data) => {
+    TipoVehiculo.findByIdAndUpdate({ _id: id }, { status: 'DESACTIVED' }, (err, tipo_data) => {
         if (err) {
             res.status(500).send({ message: err });
         } else {
@@ -183,7 +182,7 @@ function desactivar(req, res) {
 function activar(req, res) {
     var id = req.params['id'];
     // console.log(id);
-    TipoVehiculo.findByIdAndUpdate({ _id: id }, { status: 'Activo' }, (err, tipo_data) => {
+    TipoVehiculo.findByIdAndUpdate({ _id: id }, { status: 'ACTIVED' }, (err, tipo_data) => {
         if (err) {
             res.status(500).send({ message: err });
         } else {

@@ -10,7 +10,7 @@ const DeliverySchema = Schema({
     },
     direccionRecogida: { type: String, required: true, ref: 'direccion', },
     direccionEntrega: { type: String, required: true, ref: 'direccion', },
-    tipovehiculo: { type: String, required: true, ref: 'tipovehiculo', },
+    tipovehiculo: { type: String, required: false, ref: 'tipovehiculo', },
     titulo: { type: String, required: false },
     img: { type: String, required: false },
     largo: { type: String, required: false },

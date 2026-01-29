@@ -7,32 +7,32 @@ const tiposData = [
     {
         nombre: 'Carro',
         icono: 'fa-car',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
     {
         nombre: 'Moto',
         icono: 'fa-motorcycle',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
     {
         nombre: 'Camion',
         icono: 'fa-truck',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
     {
         nombre: 'Camioneta',
         icono: 'fa-truck-pickup',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
     {
         nombre: 'Pickup',
         icono: 'fa-truck-pickup',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
     {
         nombre: 'Van',
         icono: 'fa-truck-loading',
-        status: 'ACTIVED',
+        status: 'Activo',
     },
 ];
 

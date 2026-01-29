@@ -20,8 +20,8 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 router.get('/', getTipos);
-router.get('/show/:id', getTipo);
-router.get('/cat/activas', getTiposActivos);
+router.get('/:id', getTipo);
+router.get('/activo', getTiposActivos);
 
 
 router.get('/desactivar/:id', validarJWT, desactivar);
