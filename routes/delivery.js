@@ -11,7 +11,12 @@ const {
     borrarDelivery,
     getDelivery,
     getDeliverys,
-    listarPorUsuario
+    listarPorUsuario,
+    getDeliveryStatus,
+    activar,
+entregado,
+recibido,
+actualizarCoord,
 } = require('../controllers/deliveryController');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { check } = require('express-validator');
@@ -21,6 +26,17 @@ const { validarCampos } = require('../middlewares/validar-campos');
 router.get('/', getDeliverys);
 router.get('/user/:id', listarPorUsuario);
 router.get('/show/:id', getDelivery);
+router.get('/status/:status', getDeliveryStatus);
+
+
+ router.get('/activar/:id',  activar);
+ router.get('/entregado/:id',  entregado);
+ router.get('/recibido/:id',  recibido);
+
+  router.put('/update/coord/:id', [
+     validarCampos
+ ], actualizarCoord);
+
 
 router.post('/registro', [
     validarJWT,
@@ -28,7 +44,7 @@ router.post('/registro', [
 ], crearDelivery);
 
 router.put('/update/:id', [
-    validarJWT,
+    // validarJWT,
     validarCampos
 ], actualizarDelivery);
 

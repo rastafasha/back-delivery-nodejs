@@ -17,8 +17,9 @@ const DeliverySchema = Schema({
     ancho: { type: String, required: false },
     alto: { type: String, required: false },
     peso: { type: String, required: false },
-    fechaEnvio: { type: Date, default: Date.now, required: false },
-    horaEnvio: { type: Date, default: Date.now, required: false },
+    fechaEnvio: { type: String,  required: false },
+    horaEnvio: { type: String,  required: false },
+    descripcion: { type: String,  required: false },
     status: { type: String, required: false, default: 'PENDIENTE' },
     createdAt: { type: Date, default: Date.now, required: true },
     updatedAt: { type: Date }
