@@ -73,8 +73,10 @@ app.use('/api/tipopago', require('./routes/tipopago'));
 app.use('/api/transferencias', require('./routes/transferencia'));
 app.use('/api/pagoefectivo', require('./routes/pago.efectivo'));
 app.use('/api/paises', require('./routes/pais'));
-// app.use('/api/asignardelivery', require('./routes/asignardelivery'));
+app.use('/api/asignardelivery', require('./routes/asignardelivery'));
 app.use('/api/driver', require('./routes/driver'));
+app.use('/api/delivery', require('./routes/delivery'));
+app.use('/api/tipovehiculo', require('./routes/tipovehiculo'));
 
 //notification
 const vapidKeys = {

@@ -2,12 +2,12 @@ const fs = require('fs');
 const Usuario = require('../models/usuario');
 const Congeneral = require('../models/congeneral');
 const Promocion = require('../models/promocion');
-const Ingreso = require('../models/ingreso');
 const Blog = require('../models/blog');
 const Page = require('../models/page');
 const Slider = require('../models/slider');
 const Categoria = require('../models/categoria');
 const Driver = require('../models/driver');
+const Delivery = require('../models/delivery');
 
 const borrarImagen = (path) => {
 
@@ -43,39 +43,21 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
             return true;
             break;
 
-
-        case 'locaciones':
-                const tienda = await Tienda.findById(id);
-                if (!tienda) {
-                    console.log('No es un tienda por id');
-                    return false;
-                }
-                pathViejo = `./uploads/locaciones/${tienda.img}`;
-    
-                borrarImagen(pathViejo);
-    
-                tienda.img = nombreArchivo;
-                await tienda.save();
-                return true;
-                break;
-
         case 'usuarios':
-            
-        case 'ingresos':
-            const ingreso = await Ingreso.findById(id);
-            if (!ingreso) {
-                console.log('No es un ingreso por id');
+            const usuario = await Usuario.findById(id);
+            if (!usuario) {
+                console.log('No es un usuario por id');
                 return false;
             }
-            pathViejo = `./uploads/ingresos/${ingreso.img}`;
+            pathViejo = `./uploads/usuarios/${usuario.img}`;
 
             borrarImagen(pathViejo);
 
-            ingreso.img = nombreArchivo;
-            await ingreso.save();
+            usuario.img = nombreArchivo;
+            await usuario.save();
             return true;
             break;
-
+            
         case 'blogs':
             const blog = await Blog.findById(id);
             if (!blog) {
@@ -163,6 +145,21 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
 
             driver.img = nombreArchivo;
             await driver.save();
+            return true;
+            break;
+
+         case 'deliverys':
+            const delivery = await Delivery.findById(id);
+            if (!delivery) {
+                console.log('No es un delivery por id');
+                return false;
+            }
+            pathViejo = `./uploads/deliverys/${delivery.img}`;
+
+            borrarImagen(pathViejo);
+
+            delivery.img = nombreArchivo;
+            await delivery.save();
             return true;
             break;
         

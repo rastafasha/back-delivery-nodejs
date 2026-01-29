@@ -1,0 +1,32 @@
+const { Schema, model } = require('mongoose');
+
+const DeliverySchema = Schema({
+   
+    
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        require: true
+    },
+    direccionRecogida: { type: String, required: true, ref: 'direccion', },
+    direccionEntrega: { type: String, required: true, ref: 'direccion', },
+    tipovehiculo: { type: String, required: true, ref: 'tipovehiculo', },
+    titulo: { type: String, required: false },
+    img: { type: String, required: false },
+    largo: { type: String, required: false },
+    ancho: { type: String, required: false },
+    alto: { type: String, required: false },
+    peso: { type: String, required: false },
+    fechaEnvio: { type: Date, default: Date.now, required: false },
+    horaEnvio: { type: Date, default: Date.now, required: false },
+    status: { type: String, required: false, default: 'PENDIENTE' },
+    createdAt: { type: Date, default: Date.now, required: true },
+    updatedAt: { type: Date }
+});
+
+DeliverySchema.method('toJSON', function() {
+    const { __v, ...object } = this.toObject();
+    return object;
+});
+
+module.exports = model('delivery', DeliverySchema);

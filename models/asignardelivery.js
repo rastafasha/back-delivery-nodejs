@@ -7,14 +7,14 @@ const AsignarDeliverySchema = Schema({
         ref: 'driver',
         require: true
     },
-    venta: {
+    user: {
         type: Schema.Types.ObjectId,
-        ref: 'venta',
+        ref: 'user',
         require: true
     },
-    tienda: {
+    delivery: {
         type: Schema.Types.ObjectId,
-        ref: 'tienda',
+        ref: 'delivery',
         require: true
     },
     driverPosition: { type: String, required: false, default: '0' },

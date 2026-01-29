@@ -9,7 +9,7 @@
     crearAsignacion,
     actualizarAsignacion,
     getAsignacions,
-    getAsignacionsTienda,
+    // getAsignacionsTienda,
     getAsignacion,
     borrarAsignacion,
     listarAsignacionPorDriver,
@@ -28,7 +28,7 @@
  router.get('/:id', getAsignacion);
  router.get('/driver/:id', listarAsignacionPorDriver);
  router.get('/user/:id', listarAsignacionPorUser);
- router.get('/tienda/:tiendaid', getAsignacionsTienda);
+//  router.get('/tienda/:tiendaid', getAsignacionsTienda);
 
  router.get('/activar/:id',  activar);
  router.get('/entregado/:id',  entregado);

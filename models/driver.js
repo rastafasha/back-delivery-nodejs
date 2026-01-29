@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const DriverProfileSchema = Schema({
-    tipo_vehiculo: { type: String, require: true },
+    tipo_vehiculo: { type: String, require: true, ref: 'tipovehiculo', },
     placa: { type: String, require: true },
     color: { type: String, require: true, unique: true },
     modelo: { type: String, require: true },

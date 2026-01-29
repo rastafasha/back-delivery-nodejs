@@ -1,22 +1,17 @@
 const { response } = require('express');
-const Tienda = require('../models/tienda');
-// const Venta = require('../models/venta');
+const Delivery = require('../models/delivery');
 const Driver = require('../models/driver');
 const Asignacion = require('../models/asignardelivery');
 
-
-
 const crearAsignacion = async(req, res) => {
 
-    const { driver, status, tienda, venta } = req.body;
+    const { driver, status, tienda, delivery } = req.body;
 
     const body = req.body;
     try {
 
         const existeDriver = await Driver.findById(body.driver);
-       
-        const existeTienda = await Tienda.findById(body.tienda);
-        const existeVenta = await Venta.findById(body.venta);
+        const existeDelivery = await Delivery.findById(body.delivery);
 
         if (!existeDriver) {
             return res.status(400).json({
@@ -30,7 +25,7 @@ const crearAsignacion = async(req, res) => {
                 msg: 'La tienda no existe'
             });
         }
-        if (!existeVenta) {
+        if (!existeDelivery) {
             return res.status(400).json({
                 ok: false,
                 msg: 'La venta no existe'
@@ -41,7 +36,7 @@ const crearAsignacion = async(req, res) => {
         const asignacion = new Asignacion({
             driver: body.driver,
             tienda: body.tienda,
-            venta: body.venta,
+            delivery: body.delivery,
             status: body.status,
         });
 
@@ -167,7 +162,7 @@ const getAsignacion = async(req, res) => {
 
     Asignacion.findById(id)
         .populate('driver')
-        .populate('venta')
+        .populate('delivery')
         .exec((err, asignacion) => {
             if (err) {
                 return res.status(500).json({
@@ -350,7 +345,7 @@ module.exports = {
     borrarAsignacion,
     listarAsignacionPorDriver,
     listarAsignacionPorUser,
-    getAsignacionsTienda,
+    // getAsignacionsTienda,
     entregado,
     activar,
     recibido,
