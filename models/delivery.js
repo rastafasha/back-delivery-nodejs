@@ -9,14 +9,14 @@ const DeliverySchema = Schema({
         require: true
     },
     driver: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'driver',
         require: true
     },
     direccionRecogida: { type: String, required: true, ref: 'direccion' },
     direccionEntrega: { type: String, required: true, ref: 'direccion' },
     tipovehiculo: { type: String, required: false, ref: 'tipovehiculo' },
-    precio: { type: String, required: false, ref: 'tipovehiculo' },
+    precio: { type: String, required: false },
     title: { type: String, required: false },
     img: { type: String },
     largo: { type: String, required: false },

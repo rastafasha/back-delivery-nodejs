@@ -1,4 +1,5 @@
 const { response } = require('express');
+const mongoose = require('mongoose');
 const Delivery = require('../models/delivery');
 
 const getDeliverys = async (req, res) => {
@@ -137,22 +138,6 @@ const listarPorUsuario = (req, res) => {
     }).sort({ createdAt: -1 });
 }
 
-const getDeliveryStatusUser = (req, res) => {
-    var status = req.params['status'];
-    var id = req.params['id'];
-    Delivery.find({ status: status, $or: [{ user: id }, { driver: id }] }, (err, data_delivery) => {
-        if (!err) {
-            if (data_delivery) {
-                res.status(200).send({ deliveries: data_delivery });
-            } else {
-                res.status(500).send({ error: err });
-            }
-        } else {
-            res.status(500).send({ error: err });
-        }
-    }).sort({ createdAt: -1 });
-}
-
 const getDeliveryStatus = (req, res) => {
     var status = req.params['status'];
     Delivery.find({ status: status }, (err, data_delivery) => {
@@ -168,10 +153,54 @@ const getDeliveryStatus = (req, res) => {
     }).sort({ createdAt: -1 });
 }
 
+const getDeliveryStatusUser = (req, res) => {
+    var status = req.params['status'];
+    var id = req.params['id'];
+    
+    Delivery.find({ status: status, $or: [{ user: id }, { driver: id }] }, (err, data_delivery) => {
+        if (!err) {
+            if (data_delivery) {
+                res.status(200).send({ deliveries: data_delivery });
+            } else {
+                res.status(500).send({ error: err });
+            }
+        } else {
+            res.status(500).send({ error: err });
+        }
+    }).sort({ createdAt: -1 });
+}
+
+
+const getDeliveryStatusTipoVh = async (req, res) => {
+    var status = req.params['status'];
+    var tipovehiculo = req.params['tipovehiculo'];
+
+    try {
+
+        const deliveries = await Delivery.find({ status: status, tipovehiculo: tipovehiculo });
+        if (!delivery) {
+            return res.status(500).json({
+                ok: false,
+                msg: 'delivery no encontrado por el id'
+            });
+        }
+        res.json({
+            ok: true,
+            deliveries: deliveries
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error hable con el admin'
+        });
+    }
+}
+
 function activar(req, res) {
     var id = req.params['id'];
     var driver = req.params['driver'];
-    // console.log(id);
     Delivery.findByIdAndUpdate({ _id: id },
         { status: 'En Camino', driver: driver },
         (err, delivery_data) => {
@@ -190,7 +219,7 @@ function activar(req, res) {
 function entregado(req, res) {
     var id = req.params['id'];
     var driver = req.params['driver'];
-    // console.log(id);
+    
     Delivery.findByIdAndUpdate({ _id: id },
         { status: 'Entregado', driver: driver },
         (err, delivery_data) => {
@@ -276,5 +305,6 @@ module.exports = {
     recibido,
     actualizarCoord,
     getDeliveryStatusUser,
+    getDeliveryStatusTipoVh,
 
 };
