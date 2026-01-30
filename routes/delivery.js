@@ -12,6 +12,7 @@ const {
     getDelivery,
     getDeliverys,
     listarPorUsuario,
+    getDeliveryStatusUser,
     getDeliveryStatus,
     activar,
 entregado,
@@ -26,11 +27,12 @@ const { validarCampos } = require('../middlewares/validar-campos');
 router.get('/', getDeliverys);
 router.get('/user/:id', listarPorUsuario);
 router.get('/show/:id', getDelivery);
-router.get('/status/:status', getDeliveryStatus);
+router.get('/status/:status/:id', getDeliveryStatusUser);
+router.get('/status/:status/', getDeliveryStatus);
 
 
- router.get('/activar/:id',  activar);
- router.get('/entregado/:id',  entregado);
+ router.get('/activar/:id/:driver',  activar);
+ router.get('/entregado/:id/:driver',  entregado);
  router.get('/recibido/:id',  recibido);
 
   router.put('/update/coord/:id', [

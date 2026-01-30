@@ -1,7 +1,7 @@
 const { response } = require('express');
 const Delivery = require('../models/delivery');
 
-const getDeliverys = async(req, res) => {
+const getDeliverys = async (req, res) => {
 
     const deliveries = await Delivery.find().sort({ createdAt: -1 });
 
@@ -29,7 +29,7 @@ const getDelivery = (req, res) => {
 
 };
 
-const crearDelivery = async(req, res) => {
+const crearDelivery = async (req, res) => {
 
     const uid = req.uid;
     const delivery = new Delivery({
@@ -57,7 +57,7 @@ const crearDelivery = async(req, res) => {
 
 };
 
-const actualizarDelivery = async(req, res) => {
+const actualizarDelivery = async (req, res) => {
 
     const id = req.params.id;
     const uid = req.uid;
@@ -93,7 +93,7 @@ const actualizarDelivery = async(req, res) => {
 
 };
 
-const borrarDelivery = async(req, res) => {
+const borrarDelivery = async (req, res) => {
 
     const id = req.params.id;
 
@@ -137,6 +137,22 @@ const listarPorUsuario = (req, res) => {
     }).sort({ createdAt: -1 });
 }
 
+const getDeliveryStatusUser = (req, res) => {
+    var status = req.params['status'];
+    var id = req.params['id'];
+    Delivery.find({ status: status, $or: [{ user: id }, { driver: id }] }, (err, data_delivery) => {
+        if (!err) {
+            if (data_delivery) {
+                res.status(200).send({ deliveries: data_delivery });
+            } else {
+                res.status(500).send({ error: err });
+            }
+        } else {
+            res.status(500).send({ error: err });
+        }
+    }).sort({ createdAt: -1 });
+}
+
 const getDeliveryStatus = (req, res) => {
     var status = req.params['status'];
     Delivery.find({ status: status }, (err, data_delivery) => {
@@ -154,60 +170,62 @@ const getDeliveryStatus = (req, res) => {
 
 function activar(req, res) {
     var id = req.params['id'];
+    var driver = req.params['driver'];
     // console.log(id);
-    Delivery.findByIdAndUpdate({ _id: id }, 
-        { status: 'En Camino' }, 
+    Delivery.findByIdAndUpdate({ _id: id },
+        { status: 'En Camino', driver: driver },
         (err, delivery_data) => {
-        if (err) {
-            res.status(500).send({ message: err });
-        } else {
-            if (delivery_data) {
-                res.status(200).send({ delivery: delivery_data });
+            if (err) {
+                res.status(500).send({ message: err });
             } else {
-                res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                if (delivery_data) {
+                    res.status(200).send({ delivery: delivery_data });
+                } else {
+                    res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                }
             }
-        }
-    })
+        })
 }
 
 function entregado(req, res) {
     var id = req.params['id'];
+    var driver = req.params['driver'];
     // console.log(id);
-    Delivery.findByIdAndUpdate({ _id: id }, 
-        { status: 'Entregado' }, 
+    Delivery.findByIdAndUpdate({ _id: id },
+        { status: 'Entregado', driver: driver },
         (err, delivery_data) => {
-        if (err) {
-            res.status(500).send({ message: err });
-        } else {
-            if (delivery_data) {
-                res.status(200).send({ delivery: delivery_data });
+            if (err) {
+                res.status(500).send({ message: err });
             } else {
-                res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                if (delivery_data) {
+                    res.status(200).send({ delivery: delivery_data });
+                } else {
+                    res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                }
             }
-        }
-    })
+        })
 }
 
 function recibido(req, res) {
     var id = req.params['id'];
     // console.log(id);
-    Delivery.findByIdAndUpdate({ _id: id }, 
-        { status: 'Confirmado' }, 
+    Delivery.findByIdAndUpdate({ _id: id },
+        { status: 'Confirmado' },
         (err, delivery_data) => {
-        if (err) {
-            res.status(500).send({ message: err });
-        } else {
-            if (delivery_data) {
-                res.status(200).send({ delivery: delivery_data });
+            if (err) {
+                res.status(500).send({ message: err });
             } else {
-                res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                if (delivery_data) {
+                    res.status(200).send({ delivery: delivery_data });
+                } else {
+                    res.status(403).send({ message: 'No se actualizó el delivery, vuelva a intentar nuevamente.' });
+                }
             }
-        }
-    })
+        })
 }
 
 
-const actualizarCoord = async(req, res) => {
+const actualizarCoord = async (req, res) => {
 
     const id = req.params.id;
     const uid = req.uid;
@@ -253,9 +271,10 @@ module.exports = {
     getDeliverys,
     listarPorUsuario,
     getDeliveryStatus,
-     activar,
-entregado,
-recibido,
-actualizarCoord,
+    activar,
+    entregado,
+    recibido,
+    actualizarCoord,
+    getDeliveryStatusUser,
 
 };
