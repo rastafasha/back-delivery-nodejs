@@ -17,7 +17,9 @@ const dbConnection = async () => {
 
     try {
         // Configure mongoose for serverless
-        mongoose.set('bufferCommands', false);
+        // mongoose.set('bufferCommands', false);
+        // Removed bufferCommands: false to fix "Cannot call findOne() before initial connection is complete" error
+        // This allows Mongoose to queue operations until connection is established
         
         await mongoose.connect(process.env.DB_MONGO, {
             serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s

@@ -40,9 +40,6 @@ const options = {
 //lectura y parseo del body
 app.use(express.json());
 
-//db
-dbConnection();
-
 //directiorio publico de pruebas de google
 app.use(express.static('public'));
 
@@ -105,13 +102,6 @@ app.get('*', (req, res) => {
 // Exportar app para Vercel (serverless)
 module.exports = app;
 
-// Solo iniciar servidor local si no estamos en Vercel
-if (process.env.VERCEL !== '1') {
-    server.listen(process.env.PORT, () => {
-        console.log('Servidor en puerto: ' + process.env.PORT);
-    });
-}
-
 // Global error handling middleware
 app.use((err, req, res, next) => {
     console.error('Global error handler caught an error:', err);
@@ -121,4 +111,28 @@ app.use((err, req, res, next) => {
         error: err.message || err.toString()
     });
 });
+
+// Main async function to initialize server
+async function main() {
+    try {
+        // Await database connection before starting the server
+        // This fixes "Cannot call findOne() before initial connection is complete" error
+        await dbConnection();
+        
+        console.log('Database connected successfully');
+        
+        // Solo iniciar servidor local si no estamos en Vercel
+        if (process.env.VERCEL !== '1') {
+            server.listen(process.env.PORT, () => {
+                console.log('Servidor en puerto: ' + process.env.PORT);
+            });
+        }
+    } catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
+}
+
+// Start the server
+main();
 
