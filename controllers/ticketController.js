@@ -1,6 +1,7 @@
 const { response } = require('express');
 const Ticket = require('../models/ticket');
 var Mensaje = require('../models/mensaje');
+const Delivery = require('../models/delivery');
 
 
 const getTickets = async(req, res) => {
@@ -156,57 +157,38 @@ const borrarTicket = async(req, res) => {
 };
 
 const send = (req, res) => {
-    var data = req.body;
+    const data = req.body; // Viene: de, para, msm, delivery, status
 
-    var mensaje = new Mensaje();
+    const mensaje = new Mensaje();
     mensaje.de = data.de;
     mensaje.para = data.para;
     mensaje.msm = data.msm;
-    mensaje.ticket = data.ticket;
+    mensaje.ticket = data.delivery; // Guardamos el ID del delivery como referencia en el mensaje
 
-    if (data.estado == null) {
-        console.log('status');
-        Ticket.findByIdAndUpdate({ _id: data.ticket }, { status: data.status }, (err, ticket_data) => {
-            if (ticket_data) {
-                console.log(ticket_data);
-                mensaje.save((error, mensaje_data) => {
-                    if (!error) {
-                        if (mensaje_data) {
-                            res.status(200).send({
-                                data: mensaje_data,
-                            });
-                        } else {
-                            res.status(200).send({ error: error });
-                        }
-                    } else {
-                        res.status(200).send({ error: error });
-                    }
-                });
+    // 1. Primero actualizamos el estado en el modelo Delivery
+    // Usamos data.delivery porque es el ID que viene del frontend
+    Delivery.findByIdAndUpdate(data.delivery, { status: data.status, estado: data.estado }, (err, delivery_data) => {
+        if (err) {
+            return res.status(500).send({ error: 'Error al actualizar Delivery', details: err });
+        }
+
+        if (!delivery_data) {
+            return res.status(404).send({ error: 'No se encontró el Delivery ID: ' + data.delivery });
+        }
+
+        // 2. Si el Delivery se actualizó, guardamos el mensaje del chat
+        mensaje.save((error, mensaje_data) => {
+            if (error) {
+                return res.status(500).send({ error: 'Error al guardar el mensaje' });
             }
-        })
-    }
-    if (data.estado == 0) {
-        Ticket.findByIdAndUpdate({ _id: data.ticket }, { estado: data.estado }, (err, ticket_data) => {
-            if (ticket_data) {
-                console.log(ticket_data);
-                mensaje.save((error, mensaje_data) => {
-                    if (!error) {
-                        if (mensaje_data) {
-                            res.status(200).send({
-                                data: mensaje_data,
-                            });
-                        } else {
-                            res.status(200).send({ error: error });
-                        }
-                    } else {
-                        res.status(200).send({ error: error });
-                    }
-                });
-            }
-        })
-    }
 
-
+            // 3. RESPUESTA EXITOSA (Saca la petición de "pending")
+            return res.status(200).send({
+                data: mensaje_data,
+                delivery: delivery_data
+            });
+        });
+    });
 }
 
 const dataMessenger = (req, res) => {
