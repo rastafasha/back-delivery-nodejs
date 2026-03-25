@@ -157,36 +157,29 @@ const borrarTicket = async(req, res) => {
 };
 
 const send = (req, res) => {
-    const data = req.body; // Viene: de, para, msm, delivery, status
+    const data = req.body;
+
+    // VALIDACIÓN CRÍTICA: Si falta algún dato, respondemos 400 (Bad Request) en vez de 500
+    if (!data.delivery || !data.para || !data.de) {
+        return res.status(400).send({ error: 'Faltan datos obligatorios (de, para o delivery)' });
+    }
 
     const mensaje = new Mensaje();
     mensaje.de = data.de;
     mensaje.para = data.para;
     mensaje.msm = data.msm;
-    mensaje.ticket = data.delivery; // Guardamos el ID del delivery como referencia en el mensaje
+    mensaje.ticket = data.delivery;
 
-    // 1. Primero actualizamos el estado en el modelo Delivery
-    // Usamos data.delivery porque es el ID que viene del frontend
+    // Actualizamos el Delivery
     Delivery.findByIdAndUpdate(data.delivery, { status: data.status, estado: data.estado }, (err, delivery_data) => {
-        if (err) {
-            return res.status(500).send({ error: 'Error al actualizar Delivery', details: err });
-        }
+        if (err) return res.status(500).send({ error: 'Error en BD Delivery', details: err });
+        
+        if (!delivery_data) return res.status(404).send({ error: 'No existe el delivery ' + data.delivery });
 
-        if (!delivery_data) {
-            return res.status(404).send({ error: 'No se encontró el Delivery ID: ' + data.delivery });
-        }
-
-        // 2. Si el Delivery se actualizó, guardamos el mensaje del chat
         mensaje.save((error, mensaje_data) => {
-            if (error) {
-                return res.status(500).send({ error: 'Error al guardar el mensaje' });
-            }
-
-            // 3. RESPUESTA EXITOSA (Saca la petición de "pending")
-            return res.status(200).send({
-                data: mensaje_data,
-                delivery: delivery_data
-            });
+            if (error) return res.status(500).send({ error: 'Error al guardar mensaje' });
+            
+            return res.status(200).send({ data: mensaje_data });
         });
     });
 }
