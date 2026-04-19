@@ -1,11 +1,6 @@
 const fs = require('fs');
 const Usuario = require('../models/usuario');
 const Congeneral = require('../models/congeneral');
-const Promocion = require('../models/promocion');
-const Blog = require('../models/blog');
-const Page = require('../models/page');
-const Slider = require('../models/slider');
-const Categoria = require('../models/categoria');
 const Driver = require('../models/driver');
 const Delivery = require('../models/delivery');
 const TiposVehiculo = require('../models/tipovehiculo');
@@ -59,67 +54,7 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
             return true;
             break;
             
-        case 'blogs':
-            const blog = await Blog.findById(id);
-            if (!blog) {
-                console.log('No es un blog por id');
-                return false;
-            }
-            pathViejo = `./uploads/blogs/${blog.img}`;
-
-            borrarImagen(pathViejo);
-
-            blog.img = nombreArchivo;
-            await blog.save();
-            return true;
-            break;
-
-        case 'pages':
-            const page = await Page.findById(id);
-            if (!page) {
-                console.log('No es un page por id');
-                return false;
-            }
-            pathViejo = `./uploads/pages/${page.img}`;
-
-            borrarImagen(pathViejo);
-
-            page.img = nombreArchivo;
-            await page.save();
-            return true;
-            break;
-
-        case 'promocions':
-            const promocion = await Promocion.findById(id);
-            if (!promocion) {
-                console.log('No es un promocion por id');
-                return false;
-            }
-            pathViejo = `./uploads/promocions/${promocion.img}`;
-
-            borrarImagen(pathViejo);
-
-            promocion.img = nombreArchivo;
-            await promocion.save();
-            return true;
-            break;
-
-        case 'sliders':
-            const slider = await Slider.findById(id);
-            if (!slider) {
-                console.log('No es un slider por id');
-                return false;
-            }
-            pathViejo = `./uploads/sliders/${slider.img}`;
-
-            borrarImagen(pathViejo);
-
-            slider.img = nombreArchivo;
-            await slider.save();
-            return true;
-            break;
-
-        case 'categorias':
+        
             const categoria = await Categoria.findById(id);
             if (!categoria) {
                 console.log('No es un categoria por id');

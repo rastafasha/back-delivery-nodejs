@@ -1,6 +1,7 @@
 const { response } = require('express');
 const mongoose = require('mongoose');
 const Delivery = require('../models/delivery');
+const TipoVehiculo = require('../models/tipovehiculo');
 
 const getDeliverys = async (req, res) => {
 
@@ -171,32 +172,24 @@ const getDeliveryStatusUser = (req, res) => {
 }
 
 
+// En tu controlador de Node.js
 const getDeliveryStatusTipoVh = async (req, res) => {
-    var status = req.params['status'];
-    var tipovehiculo = req.params['tipovehiculo'];
-
     try {
+        const { status, tipovehiculo } = req.params;
 
-        const deliveries = await Delivery.find({ status: status, tipovehiculo: tipovehiculo });
-        if (!delivery) {
-            return res.status(500).json({
-                ok: false,
-                msg: 'delivery no encontrado por el id'
-            });
-        }
-        res.json({
-            ok: true,
-            deliveries: deliveries
-        });
+        // Buscamos directamente usando el string que viene en los params
+        const deliveries = await Delivery.find({ 
+            status: status, 
+            tipovehiculo: tipovehiculo // Aquí buscará "Pickup" directamente
+        }).sort({ createdAt: -1 });
 
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            ok: false,
-            msg: 'Error hable con el admin'
-        });
+        res.status(200).send({ deliveries });
+
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
-}
+};
+
 
 function activar(req, res) {
     var id = req.params['id'];

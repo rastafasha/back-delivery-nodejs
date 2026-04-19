@@ -2,12 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var DireccionSchema = Schema({
-    nombres_completos: { type: String, required: true },
+    nombre_ubicacion: { type: String, required: true },
     direccion: { type: String, required: true },
-    referencia: { type: String, required: true },
-    pais: { type: String, required: true },
-    ciudad: { type: String, required: true },
-    zip: { type: String, required: true },
+    referencia: { type: String, required: false },
     latitud: { type: String, required: false },
     longitud: { type: String, required: false },
     user: { type: Schema.ObjectId, ref: 'user' },

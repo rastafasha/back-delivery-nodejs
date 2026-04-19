@@ -24,8 +24,53 @@ const usuariosData = [
     },
     {
         first_name: 'Chofer',
-        last_name: 'Chofer',
+        last_name: 'Carro',
         email: 'chofer@chofer.com',
+        password: 'password',
+        role: 'CHOFER',
+        pais: 'VE',
+        ciudad: 'Caracas'
+    },
+    {
+        first_name: 'Chofer',
+        last_name: 'Moto',
+        email: 'chofermoto@chofer.com',
+        password: 'password',
+        role: 'CHOFER',
+        pais: 'VE',
+        ciudad: 'Caracas'
+    },
+    {
+        first_name: 'Chofer',
+        last_name: 'Camion',
+        email: 'chofercamion@chofer.com',
+        password: 'password',
+        role: 'CHOFER',
+        pais: 'VE',
+        ciudad: 'Caracas'
+    },
+    {
+        first_name: 'Chofer',
+        last_name: 'Camioneta',
+        email: 'chofermioneta@chofer.com',
+        password: 'password',
+        role: 'CHOFER',
+        pais: 'VE',
+        ciudad: 'Caracas'
+    },
+    {
+        first_name: 'Chofer',
+        last_name: 'Pickup',
+        email: 'choferpickup@chofer.com',
+        password: 'password',
+        role: 'CHOFER',
+        pais: 'VE',
+        ciudad: 'Caracas'
+    },
+    {
+        first_name: 'Chofer',
+        last_name: 'Cava',
+        email: 'chofercava@chofer.com',
         password: 'password',
         role: 'CHOFER',
         pais: 'VE',

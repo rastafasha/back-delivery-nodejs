@@ -22,4 +22,4 @@ UsuarioSchema.method('toJSON', function() { // modificar el _id a uid, esconde e
     return object;
 });
 
-module.exports = model('user', UsuarioSchema);
+module.exports = model('User', UsuarioSchema);

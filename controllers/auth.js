@@ -37,7 +37,7 @@ const login = async(req, res) => {
             ok: true,
             token,
             usuario: usuarioDB,
-            menu: getMenuFrontEnd(usuarioDB.role)
+            // menu: getMenuFrontEnd(usuarioDB.role)
         })
 
     } catch (error) {

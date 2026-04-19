@@ -29,9 +29,9 @@ router.get('/', getDeliverys);
 router.get('/user/:id', listarPorUsuario);
 router.get('/show/:id', getDelivery);
 
-router.get('/status/:status/:id', getDeliveryStatusUser);
 router.get('/status/:status/', getDeliveryStatus);
 router.get('/status/:status/:tipovehiculo', getDeliveryStatusTipoVh);
+router.get('/status/:status/:id', getDeliveryStatusUser);
 
 
  router.get('/activar/:id/:driver',  activar);

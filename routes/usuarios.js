@@ -68,20 +68,11 @@ router.post('/registrocliente', [
     validarCampos
 ], crearCliente);
 
-router.put('/:uid', [
-    validarJWT,
-    // validarUserRoleOMismoUsuario,
-    check('first_name', 'el nombre es obligatorio').not().isEmpty(),
-    check('email', 'el email es obligatorio').isEmail(),
-    check('role', 'el role es obligatorio').not().isEmpty(),
-    validarCampos
-], actualizarUsuario);
 
 router.put('/update/:id', [
     validarJWT,
     check('first_name', 'el nombre es obligatorio').not().isEmpty(),
     check('email', 'el email es obligatorio').isEmail(),
-    check('role', 'el role es obligatorio').not().isEmpty(),
     validarCampos
 ], actualizarUsuario);
 
