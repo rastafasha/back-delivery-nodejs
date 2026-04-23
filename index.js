@@ -21,6 +21,7 @@ const allowedOrigins = [
   "http://localhost:4207",
   "http://localhost:4203",
   "https://enviosapp-five.vercel.app",
+  "https://admindelivery-omega.vercel.app",
 ];
 
 // Configuración compartida
