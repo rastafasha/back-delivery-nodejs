@@ -484,17 +484,17 @@ const set_token_recovery = (req, res) => {
 
 
     var transporter = nodemailer.createTransport(smtpTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 587,
+        service: process.env.HOST,
+        host: process.env.HOST_EMAIL,
+        port: process.env.PORT_EMAIL,
         auth: {
-            user: 'mercadocreativo@gmail.com ',
-            pass: 'pdnknnhpjijutcau'
+            user: process.env.EMAIL_BACKEND,
+            pass: process.env.PASSWORD_APP
         }
     }));
 
     var mailOptions = {
-        from: 'mercadocreativo@gmail.com',
+        from: process.env.EMAIL_BACKEND,
         to: email,
         subject: 'Código de recuperación.',
         text: 'Tu código de recuperacion es: ' + token
